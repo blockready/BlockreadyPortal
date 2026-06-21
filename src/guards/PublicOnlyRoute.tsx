@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 
 import { useAuth } from "../hooks/useAuth";
 
@@ -10,7 +10,7 @@ export default function PublicOnlyRoute({
   children,
 }: Props) {
   const {
-    user,
+    // user,
     loading,
   } = useAuth();
 
