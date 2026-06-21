@@ -1,0 +1,51 @@
+:root {
+  /* ── Core Brand ── */
+  --br-primary:        #4F46E5;
+  --br-primary-hover:  #4338CA;
+  --br-primary-light:  #C9DEFB;
+
+  /* ── Backgrounds ── */
+  --br-background:     #E7EFFB;
+  --br-surface:        #FFFFFF;
+  --br-surface-dark:   #0C192A;
+
+  /* ── Text ── */
+  --br-text:           #161616;
+  --br-text-muted:     #4B5563;
+  --br-text-on-dark:   #E7EFFB;
+
+  /* ── Blues ── */
+  --br-blue-mid:       #83A5F7;
+  --br-blue-soft:      #C9DEFB;
+  --br-blue-lighter:   #AECDFC;
+  --br-navy:           #0C192A;
+
+  /* ── Border ── */
+  --br-border:         #AECDFC;
+  --br-border-light:   #E7EFFB;
+
+  /* ── Radius ── */
+  --br-radius:         12px;
+  --br-radius-sm:      8px;
+  --br-radius-lg:      20px;
+
+  /* ── Font ── */
+  --br-font:           Inter, system-ui, sans-serif;
+
+  /* ── Shadows ── */
+  --br-shadow-sm:      0 1px 3px rgba(12, 25, 42, 0.08);
+  --br-shadow-md:      0 4px 20px rgba(12, 25, 42, 0.10);
+  --br-shadow-lg:      0 12px 48px rgba(12, 25, 42, 0.14);
+  --br-shadow-card:    0 2px 24px rgba(79, 70, 229, 0.08), 0 1px 4px rgba(12,25,42,0.06);
+
+  /* ── Status ── */
+  --br-success:        #15803D;
+  --br-success-light:  #DCFCE7;
+  --br-error:          #DC2626;
+  --br-error-light:    #FEE2E2;
+  --br-warning:        #D97706;
+  --br-warning-light:  #FEF3C7;
+
+  /* ── Transition ── */
+  --br-transition:     150ms cubic-bezier(0.4, 0, 0.2, 1);
+}

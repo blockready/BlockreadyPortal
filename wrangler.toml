@@ -1,0 +1,9 @@
+name = "blockready-resource-portal"
+
+pages_build_output_dir = "dist"
+
+compatibility_date = "2025-06-01"
+
+[[r2_buckets]]
+binding = "RESOURCES_BUCKET"
+bucket_name = "blockready-resources"
