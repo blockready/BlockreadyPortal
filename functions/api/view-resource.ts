@@ -3,24 +3,23 @@ createSupabaseAdmin,
 type Env,
 } from "../_lib/supabase-admin";
 
-export const onRequestPost = async (
+export const onRequestGet = async (
 context: {
 request: Request;
 env: Env;
 }
 ) => {
 try {
-const body =
-await context.request.json() as {
-userId?: string;
-resourceId?: string;
-};
+const url =
+new URL(
+context.request.url
+);
 
 
-const {
-  userId,
-  resourceId,
-} = body;
+const resourceId =
+  url.searchParams.get(
+    "resourceId"
+  );
 
 if (!resourceId) {
   return Response.json(
@@ -35,9 +34,6 @@ if (!resourceId) {
   );
 }
 
-
-
-
 const supabase =
   createSupabaseAdmin(
     context.env
@@ -50,10 +46,7 @@ const {
   .from("resources")
   .select(`
     id,
-    slug,
-    title,
-    category,
-    resource_type
+    title
   `)
   .eq(
     "id",
@@ -102,38 +95,18 @@ if (!object) {
   );
 }
 
-await supabase
-  .from(
-    "resource_activity"
-  )
-  .insert({
-    user_id: userId,
-    resource_id:
-      resource.id,
-    activity_type:
-      "download",
-    resource_slug:
-      resource.slug,
-    resource_title:
-      resource.title,
-    category:
-      resource.category,
-    resource_type:
-      resource.resource_type,
-  });
-
 const headers =
   new Headers();
 
 headers.set(
   "Content-Type",
   file.mime_type ||
-    "application/octet-stream"
+    "application/pdf"
 );
 
 headers.set(
   "Content-Disposition",
-  `attachment; filename="${file.file_name}"`
+  "inline"
 );
 
 return new Response(
@@ -146,7 +119,7 @@ return new Response(
 
 } catch (error) {
 console.error(
-"download-resource error",
+"view-resource error",
 error
 );
 
@@ -163,7 +136,6 @@ return Response.json(
     status: 500,
   }
 );
-
 
 }
 };
