@@ -57,18 +57,12 @@ export const onRequestPost = async (
       success: true,
     });
   } catch (error) {
-  console.error(
-    "create-profile error",
-    error
-  );
+  console.error(error);
 
   return Response.json(
     {
       success: false,
-      error:
-        error instanceof Error
-          ? error.message
-          : JSON.stringify(error),
+      error,
     },
     {
       status: 500,
