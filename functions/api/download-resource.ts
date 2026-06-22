@@ -207,24 +207,27 @@ return new Response(
 
 
 } catch (error) {
-console.error(
-"DOWNLOAD RESOURCE ERROR:",
-error
-);
+  console.error(
+    "FULL ERROR:",
+    error
+  );
 
-
-return Response.json(
-  {
-    success: false,
-    error: String(
-      error
+  return new Response(
+    JSON.stringify(
+      {
+        success: false,
+        error,
+      },
+      null,
+      2
     ),
-  },
-  {
-    status: 500,
-  }
-);
-
-
+    {
+      status: 500,
+      headers: {
+        "Content-Type":
+          "application/json",
+      },
+    }
+  );
 }
 };

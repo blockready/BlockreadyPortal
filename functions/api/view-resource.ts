@@ -14,6 +14,23 @@ console.log(
 "VIEW RESOURCE FUNCTION HIT"
 );
 
+console.log(
+  "HAS URL:",
+  !!context.env
+    .VITE_SUPABASE_URL
+);
+
+console.log(
+  "HAS SERVICE ROLE:",
+  !!context.env
+    .SUPABASE_SERVICE_ROLE_KEY
+);
+
+console.log(
+  "HAS BUCKET:",
+  !!context.env
+    .RESOURCES_BUCKET
+);
 
 const url = new URL(
   context.request.url
@@ -167,27 +184,29 @@ return new Response(
     headers,
   }
 );
-
-
 } catch (error) {
-console.error(
-"VIEW RESOURCE ERROR:",
-error
-);
+  console.error(
+    "FULL ERROR:",
+    error
+  );
 
-
-return Response.json(
-  {
-    success: false,
-    error: String(
-      error
+  return new Response(
+    JSON.stringify(
+      {
+        success: false,
+        error,
+      },
+      null,
+      2
     ),
-  },
-  {
-    status: 500,
-  }
-);
+    {
+      status: 500,
+      headers: {
+        "Content-Type":
+          "application/json",
+      },
+    }
+  );
 
-
-}
-};
+ 
+}}
