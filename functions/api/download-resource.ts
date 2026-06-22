@@ -10,30 +10,17 @@ env: Env;
 }
 ) => {
 try {
-console.log(
-"DOWNLOAD RESOURCE FUNCTION HIT"
-);
-
 const body =
-  await context.request.json() as {
-    userId?: string;
-    resourceId?: string;
-  };
+await context.request.json() as {
+userId?: string;
+resourceId?: string;
+};
+
 
 const {
   userId,
   resourceId,
 } = body;
-
-console.log(
-  "userId:",
-  userId
-);
-
-console.log(
-  "resourceId:",
-  resourceId
-);
 
 if (!resourceId) {
   return Response.json(
@@ -53,10 +40,6 @@ const supabase =
     context.env
   );
 
-console.log(
-  "Supabase Admin Created"
-);
-
 const {
   data: resource,
   error: resourceError,
@@ -75,16 +58,6 @@ const {
   )
   .single();
 
-console.log(
-  "resource:",
-  resource
-);
-
-console.log(
-  "resourceError:",
-  resourceError
-);
-
 if (resourceError) {
   throw resourceError;
 }
@@ -95,7 +68,6 @@ const {
 } = await supabase
   .from("resource_files")
   .select(`
-    id,
     file_name,
     mime_type,
     r2_key
@@ -106,30 +78,9 @@ const {
   )
   .single();
 
-console.log(
-  "file:",
-  file
-);
-
-console.log(
-  "fileError:",
-  fileError
-);
-
 if (fileError) {
   throw fileError;
 }
-
-console.log(
-  "Bucket Exists:",
-  !!context.env
-    .RESOURCES_BUCKET
-);
-
-console.log(
-  "R2 Key:",
-  file.r2_key
-);
 
 const object =
   await context.env
@@ -138,18 +89,9 @@ const object =
       file.r2_key
     );
 
-console.log(
-  "Object Found:",
-  !!object
-);
-
 if (!object) {
-  return Response.json(
-    {
-      success: false,
-      error:
-        "R2 object not found",
-    },
+  return new Response(
+    "File not found",
     {
       status: 404,
     }
@@ -157,32 +99,31 @@ if (!object) {
 }
 
 const {
-  error:
-    activityError,
+error: activityError,
 } = await supabase
-  .from(
-    "resource_activity"
-  )
-  .insert({
-    user_id: userId,
-    resource_id:
-      resource.id,
-    activity_type:
-      "download",
-    resource_slug:
-      resource.slug,
-    resource_title:
-      resource.title,
-    category:
-      resource.category,
-    resource_type:
-      resource.resource_type,
-  });
+.from(
+"resource_activity"
+)
+.insert({
+user_id: userId,
+resource_id:
+resource.id,
+activity_type:
+"download",
+resource_slug:
+resource.slug,
+resource_title:
+resource.title,
+category:
+resource.category,
+resource_type:
+resource.resource_type,
+});
 
-console.log(
-  "activityError:",
-  activityError
-);
+if (activityError) {
+throw activityError;
+}
+
 
 const headers =
   new Headers();
@@ -207,27 +148,19 @@ return new Response(
 
 
 } catch (error) {
-  console.error(
-    "FULL ERROR:",
-    error
-  );
-
-  return new Response(
-    JSON.stringify(
-      {
-        success: false,
-        error,
-      },
-      null,
-      2
-    ),
-    {
-      status: 500,
-      headers: {
-        "Content-Type":
-          "application/json",
-      },
-    }
-  );
+return Response.json(
+{
+success: false,
+error:
+error instanceof Error
+? error.message
+: JSON.stringify(
+error
+),
+},
+{
+status: 500,
+}
+);
 }
 };

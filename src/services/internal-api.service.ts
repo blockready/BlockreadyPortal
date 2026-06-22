@@ -180,21 +180,23 @@ export async function trackResourceView(
 }
 
 export async function downloadResource(
-  resourceId: string
+userId: string,
+resourceId: string
 ) {
-  const response = await fetch(
-    "/api/download-resource",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type":
-          "application/json",
-      },
-      body: JSON.stringify({
-        resourceId,
-      }),
-    }
-  );
+const response = await fetch(
+"/api/download-resource",
+{
+method: "POST",
+headers: {
+"Content-Type":
+"application/json",
+},
+body: JSON.stringify({
+userId,
+resourceId,
+}),
+}
+);
 
-  return response;
+return response;
 }

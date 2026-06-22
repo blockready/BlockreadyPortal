@@ -10,41 +10,15 @@ env: Env;
 }
 ) => {
 try {
-console.log(
-"VIEW RESOURCE FUNCTION HIT"
-);
-
-console.log(
-  "HAS URL:",
-  !!context.env
-    .VITE_SUPABASE_URL
-);
-
-console.log(
-  "HAS SERVICE ROLE:",
-  !!context.env
-    .SUPABASE_SERVICE_ROLE_KEY
-);
-
-console.log(
-  "HAS BUCKET:",
-  !!context.env
-    .RESOURCES_BUCKET
-);
-
 const url = new URL(
-  context.request.url
+context.request.url
 );
+
 
 const resourceId =
   url.searchParams.get(
     "resourceId"
   );
-
-console.log(
-  "resourceId:",
-  resourceId
-);
 
 if (!resourceId) {
   return Response.json(
@@ -64,10 +38,6 @@ const supabase =
     context.env
   );
 
-console.log(
-  "Supabase Admin Created"
-);
-
 const {
   data: resource,
   error: resourceError,
@@ -83,16 +53,6 @@ const {
   )
   .single();
 
-console.log(
-  "resource:",
-  resource
-);
-
-console.log(
-  "resourceError:",
-  resourceError
-);
-
 if (resourceError) {
   throw resourceError;
 }
@@ -103,7 +63,6 @@ const {
 } = await supabase
   .from("resource_files")
   .select(`
-    id,
     file_name,
     mime_type,
     r2_key
@@ -114,30 +73,9 @@ const {
   )
   .single();
 
-console.log(
-  "file:",
-  file
-);
-
-console.log(
-  "fileError:",
-  fileError
-);
-
 if (fileError) {
   throw fileError;
 }
-
-console.log(
-  "Bucket Exists:",
-  !!context.env
-    .RESOURCES_BUCKET
-);
-
-console.log(
-  "R2 Key:",
-  file.r2_key
-);
 
 const object =
   await context.env
@@ -146,18 +84,9 @@ const object =
       file.r2_key
     );
 
-console.log(
-  "Object Found:",
-  !!object
-);
-
 if (!object) {
-  return Response.json(
-    {
-      success: false,
-      error:
-        "R2 object not found",
-    },
+  return new Response(
+    "File not found",
     {
       status: 404,
     }
@@ -184,29 +113,22 @@ return new Response(
     headers,
   }
 );
+
+
 } catch (error) {
-  console.error(
-    "FULL ERROR:",
-    error
-  );
-
-  return new Response(
-    JSON.stringify(
-      {
-        success: false,
-        error,
-      },
-      null,
-      2
-    ),
-    {
-      status: 500,
-      headers: {
-        "Content-Type":
-          "application/json",
-      },
-    }
-  );
-
- 
-}}
+return Response.json(
+{
+success: false,
+error:
+error instanceof Error
+? error.message
+: JSON.stringify(
+error
+),
+},
+{
+status: 500,
+}
+);
+}
+};

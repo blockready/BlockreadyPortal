@@ -82,10 +82,18 @@ export default function ResourceDetailPage() {
       }
 
       try {
-        const response =
-          await downloadResource(
-            resource.id
-          );
+        if (!user) {
+throw new Error(
+"User not authenticated"
+);
+}
+
+const response =
+await downloadResource(
+user.id,
+resource.id
+);
+
 
         if (!response.ok) {
           throw new Error(
