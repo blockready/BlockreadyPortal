@@ -10,16 +10,24 @@ env: Env;
 }
 ) => {
 try {
-const url =
-new URL(
-context.request.url
+console.log(
+"VIEW RESOURCE FUNCTION HIT"
 );
 
+
+const url = new URL(
+  context.request.url
+);
 
 const resourceId =
   url.searchParams.get(
     "resourceId"
   );
+
+console.log(
+  "resourceId:",
+  resourceId
+);
 
 if (!resourceId) {
   return Response.json(
@@ -39,6 +47,10 @@ const supabase =
     context.env
   );
 
+console.log(
+  "Supabase Admin Created"
+);
+
 const {
   data: resource,
   error: resourceError,
@@ -53,6 +65,16 @@ const {
     resourceId
   )
   .single();
+
+console.log(
+  "resource:",
+  resource
+);
+
+console.log(
+  "resourceError:",
+  resourceError
+);
 
 if (resourceError) {
   throw resourceError;
@@ -75,9 +97,30 @@ const {
   )
   .single();
 
+console.log(
+  "file:",
+  file
+);
+
+console.log(
+  "fileError:",
+  fileError
+);
+
 if (fileError) {
   throw fileError;
 }
+
+console.log(
+  "Bucket Exists:",
+  !!context.env
+    .RESOURCES_BUCKET
+);
+
+console.log(
+  "R2 Key:",
+  file.r2_key
+);
 
 const object =
   await context.env
@@ -86,9 +129,18 @@ const object =
       file.r2_key
     );
 
+console.log(
+  "Object Found:",
+  !!object
+);
+
 if (!object) {
-  return new Response(
-    "File not found",
+  return Response.json(
+    {
+      success: false,
+      error:
+        "R2 object not found",
+    },
     {
       status: 404,
     }
@@ -119,7 +171,7 @@ return new Response(
 
 } catch (error) {
 console.error(
-"view-resource error",
+"VIEW RESOURCE ERROR:",
 error
 );
 
@@ -127,15 +179,15 @@ error
 return Response.json(
   {
     success: false,
-    error:
-      error instanceof Error
-        ? error.message
-        : "Unknown error",
+    error: String(
+      error
+    ),
   },
   {
     status: 500,
   }
 );
+
 
 }
 };

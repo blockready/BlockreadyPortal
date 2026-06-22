@@ -10,17 +10,30 @@ env: Env;
 }
 ) => {
 try {
-const body =
-await context.request.json() as {
-userId?: string;
-resourceId?: string;
-};
+console.log(
+"DOWNLOAD RESOURCE FUNCTION HIT"
+);
 
+const body =
+  await context.request.json() as {
+    userId?: string;
+    resourceId?: string;
+  };
 
 const {
   userId,
   resourceId,
 } = body;
+
+console.log(
+  "userId:",
+  userId
+);
+
+console.log(
+  "resourceId:",
+  resourceId
+);
 
 if (!resourceId) {
   return Response.json(
@@ -35,13 +48,14 @@ if (!resourceId) {
   );
 }
 
-
-
-
 const supabase =
   createSupabaseAdmin(
     context.env
   );
+
+console.log(
+  "Supabase Admin Created"
+);
 
 const {
   data: resource,
@@ -60,6 +74,16 @@ const {
     resourceId
   )
   .single();
+
+console.log(
+  "resource:",
+  resource
+);
+
+console.log(
+  "resourceError:",
+  resourceError
+);
 
 if (resourceError) {
   throw resourceError;
@@ -82,9 +106,30 @@ const {
   )
   .single();
 
+console.log(
+  "file:",
+  file
+);
+
+console.log(
+  "fileError:",
+  fileError
+);
+
 if (fileError) {
   throw fileError;
 }
+
+console.log(
+  "Bucket Exists:",
+  !!context.env
+    .RESOURCES_BUCKET
+);
+
+console.log(
+  "R2 Key:",
+  file.r2_key
+);
 
 const object =
   await context.env
@@ -93,16 +138,28 @@ const object =
       file.r2_key
     );
 
+console.log(
+  "Object Found:",
+  !!object
+);
+
 if (!object) {
-  return new Response(
-    "File not found",
+  return Response.json(
+    {
+      success: false,
+      error:
+        "R2 object not found",
+    },
     {
       status: 404,
     }
   );
 }
 
-await supabase
+const {
+  error:
+    activityError,
+} = await supabase
   .from(
     "resource_activity"
   )
@@ -121,6 +178,11 @@ await supabase
     resource_type:
       resource.resource_type,
   });
+
+console.log(
+  "activityError:",
+  activityError
+);
 
 const headers =
   new Headers();
@@ -146,7 +208,7 @@ return new Response(
 
 } catch (error) {
 console.error(
-"download-resource error",
+"DOWNLOAD RESOURCE ERROR:",
 error
 );
 
@@ -154,10 +216,9 @@ error
 return Response.json(
   {
     success: false,
-    error:
-      error instanceof Error
-        ? error.message
-        : "Unknown error",
+    error: String(
+      error
+    ),
   },
   {
     status: 500,
