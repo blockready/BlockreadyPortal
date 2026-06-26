@@ -1,0 +1,184 @@
+.br-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: white;
+
+  /* background: #3947b3; */
+  /* border-bottom: 1px solid #e5e7eb; */
+}
+
+.br-header__container {
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  padding: 1rem 2rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.br-header__brand {
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.85rem;
+
+  text-decoration: none;
+}
+
+.br-header__logo {
+  height: 40px;
+  /* background: white;   */
+  width: auto;
+
+  display: block;
+}
+
+.br-header__brand-text {
+  font-size: 1.55rem;
+
+  font-weight: 700;
+
+  letter-spacing: -0.02em;
+
+  color: black;
+
+  line-height: 1;
+}
+
+.br-header__menu {
+  position: relative;
+}
+
+.br-header__account-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.75rem 1rem;
+
+  border: 1px solid #d8d6cd;
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  cursor: pointer;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.br-header__account-button:hover {
+  background: #f8f9fc;
+}
+
+.br-header__caret {
+  font-size: 0.7rem;
+}
+
+.br-header__dropdown {
+  position: absolute;
+
+  right: 0;
+  top: calc(100% + 10px);
+
+  min-width: 220px;
+
+  background: white;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 12px 30px
+    rgba(0, 0, 0, 0.12);
+}
+
+.br-header__greeting {
+  padding: 1rem;
+
+  font-weight: 700;
+
+  color: #3947b3;
+
+  border-bottom: 1px solid #ececec;
+}
+
+.br-header__dropdown-item {
+  display: block;
+
+  width: 100%;
+
+  padding: 1rem;
+
+  text-align: left;
+
+  background: transparent;
+
+  border: none;
+
+  text-decoration: none;
+
+  color: #1c1c1a;
+
+  font-size: 0.95rem;
+
+  cursor: pointer;
+}
+
+.br-header__dropdown-item:hover {
+  background: #f8f9fc;
+}
+
+@media (max-width: 768px) {
+
+  .br-header__container {
+    padding: 0.75rem 1rem;
+  }
+
+  .br-header__brand {
+    gap: 0.5rem;
+  }
+
+  .br-header__logo {
+    height: 32px;
+  }
+
+  .br-header__brand-text {
+    font-size: 1.15rem;
+  }
+
+  .br-header__account-button {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  .br-header__dropdown {
+    right: 0;
+    min-width: 190px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .br-header__brand-text {
+    display: none;
+  }
+
+  .br-header__logo {
+    height: 34px;
+  }
+
+  .br-header__account-button {
+    padding: .55rem .7rem;
+    font-size: .8rem;
+  }
+
+}

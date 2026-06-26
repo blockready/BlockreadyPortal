@@ -1,0 +1,306 @@
+/* ==========================================
+   Markdown / Dynamic Content Styling
+========================================== */
+
+.resource-content {
+    color: #334155;
+    font-size: 1.05rem;
+    line-height: 1.85;
+}
+
+/* ------------------------------------------
+   Paragraphs
+------------------------------------------ */
+
+.resource-content p {
+    margin: 0 0 1.5rem;
+    line-height: 1.9;
+}
+
+/* ------------------------------------------
+   Headings
+------------------------------------------ */
+
+.resource-content h1,
+.resource-content h2,
+.resource-content h3,
+.resource-content h4,
+.resource-content h5,
+.resource-content h6 {
+
+    color: #1e293b;
+
+    font-weight: 650;
+
+    line-height: 1.3;
+
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+}
+
+.resource-content h1 {
+    font-size: 2.25rem;
+}
+
+.resource-content h2 {
+    font-size: 2rem;
+}
+
+.resource-content h3 {
+    font-size: 1.55rem;
+}
+
+.resource-content h4 {
+    font-size: 1.3rem;
+}
+
+/* ------------------------------------------
+   Lists
+------------------------------------------ */
+
+.resource-content ul,
+.resource-content ol {
+
+    margin: 1rem 0;
+
+    padding-left: 1.7rem;
+}
+
+/* Proper indentation */
+
+.resource-content li {
+
+    padding-left: .4rem;
+
+    margin-bottom: .85rem;
+
+    line-height: 1.8;
+}
+
+/* remove large gap after last item */
+
+.resource-content li:last-child{
+    margin-bottom:0;
+}
+
+/* nested list */
+
+.resource-content li ul,
+.resource-content li ol{
+
+    margin-top:.8rem;
+    margin-bottom:.8rem;
+}
+
+/* ------------------------------------------
+   Bullet Styling
+------------------------------------------ */
+
+.resource-content ul li::marker{
+
+    color:#0d0d0e;
+
+    font-size:1rem;
+}
+
+/* Numbered lists */
+
+.resource-content ol li::marker{
+
+    color:#2563eb;
+
+    font-weight:700;
+}
+
+/* ------------------------------------------
+   Blockquotes
+------------------------------------------ */
+
+.resource-content blockquote{
+
+    margin:2rem 0;
+
+    padding:1rem 1.4rem;
+
+    border-left:4px solid #2563eb;
+
+    background:#f8fafc;
+
+    color:#475569;
+
+    font-style:italic;
+}
+
+/* ------------------------------------------
+   Horizontal Rule
+------------------------------------------ */
+
+.resource-content hr{
+
+    margin:3rem 0;
+
+    border:none;
+
+    border-top:1px solid #e2e8f0;
+}
+
+/* ------------------------------------------
+   Links
+------------------------------------------ */
+
+.resource-content a{
+
+    color:#2563eb;
+
+    text-decoration:none;
+
+    font-weight:500;
+}
+
+.resource-content a:hover{
+
+    text-decoration:underline;
+}
+
+/* ------------------------------------------
+   Images
+------------------------------------------ */
+
+.resource-content img{
+
+    display:block;
+
+    max-width:100%;
+
+    border-radius:12px;
+
+    margin:2rem auto;
+}
+
+/* ------------------------------------------
+   Tables
+------------------------------------------ */
+
+.resource-content table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin:2rem 0;
+}
+
+.resource-content th,
+.resource-content td{
+
+    border:1px solid #e2e8f0;
+
+    padding:14px 18px;
+
+    text-align:left;
+}
+
+.resource-content th{
+
+    background:#f8fafc;
+}
+
+/* ------------------------------------------
+   Code
+------------------------------------------ */
+
+.resource-content code{
+
+    background:#f1f5f9;
+
+    padding:.18rem .4rem;
+
+    border-radius:5px;
+
+    font-size:.92em;
+}
+
+.resource-content pre{
+
+    margin:2rem 0;
+
+    padding:20px;
+
+    overflow:auto;
+
+    border-radius:12px;
+
+    background:#0f172a;
+
+    color:#fff;
+}
+
+/* ==========================================
+   Mobile
+========================================== */
+
+@media (max-width: 768px) {
+
+    .resource-content{
+        font-size:1rem;
+        line-height:1.75;
+    }
+
+    .resource-content h1{
+        font-size:1.9rem;
+    }
+
+    .resource-content h2{
+        font-size:1.6rem;
+    }
+
+    .resource-content h3{
+        font-size:1.35rem;
+    }
+
+    .resource-content h4{
+        font-size:1.15rem;
+    }
+
+    .resource-content ul,
+    .resource-content ol{
+        padding-left:1.3rem;
+    }
+
+    .resource-content table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+
+    .resource-content pre{
+        padding:16px;
+        font-size:.9rem;
+    }
+
+}
+
+@media (max-width:480px){
+
+    .resource-content{
+        font-size:.96rem;
+        line-height:1.7;
+    }
+
+    .resource-content h1{
+        font-size:1.65rem;
+    }
+
+    .resource-content h2{
+        font-size:1.45rem;
+    }
+
+    .resource-content h3{
+        font-size:1.25rem;
+    }
+
+    .resource-content blockquote{
+        padding:1rem;
+    }
+
+}

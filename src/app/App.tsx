@@ -18,6 +18,7 @@ import LibraryPage from "../pages/LibraryPage";
 import ResourceDetailPage from "../pages/ResourceDetailPage";
 
 import { ROUTES } from "./routes";
+import ResourceViewerPage from "../pages/ResourceViewerPage";
 
 export default function App() {
   return (
@@ -98,6 +99,14 @@ export default function App() {
       <ResourceDetailPage />
     </ProtectedRoute>
   }
+/>
+
+<Route
+  path="/resource/:slug/view"
+  element={
+  <ProtectedRoute>
+  <ResourceViewerPage />
+  </ProtectedRoute>}
 />
     </Routes>
   );

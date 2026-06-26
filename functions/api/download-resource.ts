@@ -109,7 +109,7 @@ user_id: userId,
 resource_id:
 resource.id,
 activity_type:
-"download",
+"resource_downloaded",
 resource_slug:
 resource.slug,
 resource_title:

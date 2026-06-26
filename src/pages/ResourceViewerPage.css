@@ -1,0 +1,299 @@
+/* ==========================================
+   Resource Viewer Page
+========================================== */
+
+.br-resource-viewer-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.25rem clamp(1rem, 3vw, 2rem);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ==========================================
+   Header
+========================================== */
+
+.br-resource-viewer-header {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.br-resource-viewer-header__content {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.br-resource-viewer-header__content h1 {
+    margin: 0;
+    font-size: clamp(1.4rem, 1rem + 1.5vw, 2rem);
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.2;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.br-resource-viewer-header__content p {
+    margin-top: 0.5rem;
+    color: #64748b;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.br-resource-viewer-header__actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.br-resource-viewer-header__actions .br-button.br-resource-download-button {
+    min-width: 180px;
+    max-width: none;
+    height: 48px;
+    white-space: nowrap;
+}
+
+/* ==========================================
+   Viewer Container
+========================================== */
+
+.br-resource-viewer {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+    min-height: 500px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==========================================
+   PDF
+========================================== */
+
+.br-resource-viewer iframe {
+    display: block;
+    width: 100%;
+    height: 900px;
+    max-height: 80vh;
+    border: none;
+    flex: 1;
+}
+
+/* ==========================================
+   Video
+========================================== */
+
+.br-resource-viewer video {
+    display: block;
+    width: 100%;
+    max-height: 900px;
+    background: #000;
+    object-fit: contain;
+}
+
+/* ==========================================
+   Image
+========================================== */
+
+.br-resource-viewer img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* ==========================================
+   Audio
+========================================== */
+
+.br-resource-viewer audio {
+    display: block;
+    width: 100%;
+    padding: 2rem;
+    box-sizing: border-box;
+    background: #fafafa;
+}
+
+/* ==========================================
+   Markdown
+========================================== */
+
+.br-resource-viewer--markdown {
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    background: #ffffff;
+    overflow-x: auto;
+    word-break: break-word;
+}
+
+/* ==========================================
+   Unsupported Viewer
+========================================== */
+
+.br-resource-viewer--unsupported {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    min-height: 350px;
+    padding: 2rem;
+    text-align: center;
+    color: #64748b;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+/* ==========================================
+   Loading
+========================================== */
+
+.br-resource-loading {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    color: #64748b;
+    text-align: center;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+/* ==========================================
+   Tablet
+========================================== */
+
+@media (max-width: 768px) {
+
+    .br-resource-viewer-page {
+        padding: 1rem;
+    }
+
+    .br-resource-viewer-header {
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 3rem;
+    }
+
+    .br-resource-viewer-header__content h1 {
+        font-size: 1.3rem;
+    }
+
+    .br-resource-viewer-header__content p {
+        font-size: 0.9rem;
+        margin-top: 0.25rem;
+    }
+
+    .br-resource-viewer-header__actions {
+        flex-shrink: 0;
+        width: auto;
+    }
+
+    .br-resource-viewer-header__actions .br-button.br-resource-download-button {
+        min-width: 0;
+        width: auto;
+        height: 42px;
+        padding: 0 1.25rem;
+        font-size: 0.9rem;
+    }
+
+    .br-resource-viewer {
+        border-radius: 14px;
+    }
+
+    .br-resource-viewer iframe {
+        height: 70vh;
+    }
+}
+
+/* ==========================================
+   Mobile
+========================================== */
+
+@media (max-width: 480px) {
+
+    .br-resource-viewer-page {
+        padding: 0.75rem;
+    }
+
+    .br-resource-viewer-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .br-resource-viewer-header__content h1 {
+        font-size: 1.25rem;
+    }
+
+    .br-resource-viewer-header__content p {
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    .br-resource-viewer-header__actions {
+        width: 45%;
+    }
+
+    .br-resource-viewer-header__actions .br-button.br-resource-download-button {
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+        height: 44px;
+        font-size: 0.9rem;
+    }
+
+    .br-resource-viewer {
+        border-radius: 12px;
+        min-height: 280px;
+    }
+
+    .br-resource-viewer iframe {
+        height: 60vh;
+    }
+
+    .br-resource-viewer video {
+        max-height: 45vh;
+    }
+
+    .br-resource-viewer audio {
+        padding: 1rem;
+    }
+
+    .br-resource-viewer--markdown {
+        padding: 1.25rem;
+    }
+
+    .br-resource-viewer--unsupported,
+    .br-resource-loading {
+        min-height: 220px;
+        padding: 1.25rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* ==========================================
+   Very small phones
+========================================== */
+
+@media (max-width: 360px) {
+
+    .br-resource-viewer-header__content h1 {
+        font-size: 1.1rem;
+    }
+
+    .br-resource-viewer iframe {
+        height: 55vh;
+    }
+}

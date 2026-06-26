@@ -8,6 +8,8 @@ import ResourceCard from "../components/resources/ResourceCard";
 
 import { resourceService } from "../services/resource.service";
 
+import AppHeader from "../components/layout/AppHeader";
+
 import type {
   Resource,
 } from "../types/resource";
@@ -98,6 +100,8 @@ export default function LibraryPage() {
     ]);
 
   return (
+    <>
+    <AppHeader />
     <main
       style={{
         maxWidth:
@@ -105,7 +109,7 @@ export default function LibraryPage() {
         margin:
           "0 auto",
         padding:
-          "2rem",
+          "2rem 1rem",
       }}
     >
       <style>{`
@@ -159,15 +163,24 @@ export default function LibraryPage() {
           flex-wrap: wrap;
         }
 
-        @media (max-width: 560px) {
-          .br-filters-row {
-            flex-direction: column;
-          }
+       @media (max-width:560px){
 
-          .br-select--category {
-            width: 100%;
-          }
-        }
+.br-filters-row{
+flex-direction:column;
+align-items:stretch;
+}
+
+.br-input--search{
+width:100%;
+}
+
+.br-select--category{
+width:100%;
+min-width:unset;
+flex:none;
+}
+
+}
       `}</style>
 
       <h1>
@@ -237,7 +250,7 @@ export default function LibraryPage() {
             display:
               "grid",
             gridTemplateColumns:
-              "repeat(auto-fill,minmax(320px,1fr))",
+              "repeat(auto-fill,minmax(280px,1fr))",
             gap: "1rem",
           }}
         >
@@ -258,5 +271,6 @@ export default function LibraryPage() {
         </div>
       )}
     </main>
+    </>
   );
 }

@@ -17,6 +17,8 @@ import type {
 
 import { useAuth } from "../hooks/useAuth";
 
+import AppHeader from "../components/layout/AppHeader";
+
 import {
   trackResourceView,
   downloadResource,
@@ -139,19 +141,38 @@ resource.id
     };
 
   if (loading) {
-    console.log("Resource data:", resource);
-    return <p>Loading...</p>;
-  }
+  return (
+    <>
+      <AppHeader />
+      <p
+        style={{
+          padding: "2rem",
+        }}
+      >
+        Loading...
+      </p>
+    </>
+  );
+}
 
   if (!resource) {
-    return (
-      <p>
+  return (
+    <>
+      <AppHeader />
+      <p
+        style={{
+          padding: "2rem",
+        }}
+      >
         Resource not found.
       </p>
-    );
-  }
+    </>
+  );
+}
 
   return (
+    <>
+    <AppHeader />
     <main
       style={{
         maxWidth:
@@ -169,5 +190,6 @@ resource.id
         }
       />
     </main>
+    </>
   );
 }

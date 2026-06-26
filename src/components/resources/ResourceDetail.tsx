@@ -1,72 +1,64 @@
-import type {
-Resource,
-} from "../../types/resource";
+import type { Resource } from "../../types/resource";
+
+import ResourceHero from "./ResourceHero";
+import ResourceMeta from "./ResourceMeta";
+import ResourceActions from "./ResourceActions";
+import ResourceOverview from "./ResourceOverview";
+import MasterclassBanner from "./MasterclassBanner";
+import ResourceDisclaimer from "./ResourceDisclaimer";
+
+// import PdfViewer from "../viewers/PdfViewer";
+// import VideoViewer from "../viewers/VideoViewer";
+// import MarkdownViewer from "../viewers/MarkdownViewer";
+// import ImageViewer from "../viewers/ImageViewer";
+// import UnsupportedViewer from "../viewers/UnsupportedViewer";
+
+import "./ResourceDetail.css";
 
 interface Props {
-resource: Resource;
-onDownload: () => void;
+  resource: Resource;
+  onDownload: () => void;
 }
 
+// function renderViewer(resource: Resource) {
+//   switch (resource.preview_type) {
+//     case "pdf":
+//       return <PdfViewer resource={resource} />;
+
+//     case "video":
+//       return <VideoViewer resource={resource} />;
+
+//     case "markdown":
+//       return <MarkdownViewer resource={resource} />;
+
+//     case "image":
+//       return <ImageViewer resource={resource} />;
+
+//     default:
+//       return <UnsupportedViewer resource={resource} />;
+//   }
+// }
+
 export default function ResourceDetail({
-resource,
-onDownload,
+  resource,
+  onDownload,
 }: Props) {
-return ( <article className="br-card"> <h1>
-{resource.title} </h1>
+  return (
+    <article className="br-resource-detail">
+      <ResourceHero resource={resource} />
 
+      <ResourceMeta resource={resource} />
 
-  <p>
-    {resource.description}
-  </p>
+      <ResourceActions
+        resource={resource}
+        onDownload={onDownload}
+      />
 
-  <div>
-    <strong>
-      Category:
-    </strong>{" "}
-    {resource.category}
-  </div>
+      <ResourceOverview resource={resource} />
 
-  <div>
-    <strong>
-      Type:
-    </strong>{" "}
-    {resource.resource_type}
-  </div>
+      <MasterclassBanner />
 
-  <div
-    style={{
-      marginTop: "2rem",
-      marginBottom:
-        "2rem",
-    }}
-  >
-    <iframe
-      src={`/api/view-resource?resourceId=${resource.id}`}
-      title={
-        resource.title
-      }
-      width="100%"
-      height="900"
-      style={{
-        border:
-          "1px solid #ddd",
-        borderRadius:
-          "8px",
-      }}
-    />
-  </div>
-
-  <button
-    type="button"
-    className="br-button"
-    onClick={
-      onDownload
-    }
-  >
-    Download Resource
-  </button>
-</article>
-
-
-);
+      <ResourceDisclaimer />
+    </article>
+  );
 }

@@ -13,17 +13,14 @@ export const onRequestPost = async (
     const body = await context.request.json() as {
   userId?: string;
   resourceId?: string;
-  email?: string;
-  firstName?: string;
-  lastName?: string;
-  leadSource?: string;
-  interest?: string;
+  activityType?: string;
 };
 
     const {
-      userId,
-      resourceId,
-    } = body;
+  userId,
+  resourceId,
+  activityType,
+} = body;
 
     const supabase =
       createSupabaseAdmin(
@@ -64,7 +61,8 @@ export const onRequestPost = async (
             resource.id,
 
           activity_type:
-            "view",
+  activityType ??
+  "resource_opened",
 
           resource_slug:
             resource.slug,

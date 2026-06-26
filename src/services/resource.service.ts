@@ -14,17 +14,24 @@ class ResourceService {
     } = await supabase
       .from("resources")
       .select(`
-        id,
-        slug,
-        title,
-        description,
-        category,
-        resource_type,
-        thumbnail_url,
-        is_featured,
-        is_published,
-        created_at
-      `)
+  id,
+  slug,
+  title,
+  description,
+  long_description,
+  category,
+  resource_type,
+  thumbnail_url,
+  preview_type,
+  view_url,
+  version,
+  created_at,
+  updated_at,
+  last_updated_at,
+  reviewed_at,
+  is_featured,
+  is_published
+`)
       .eq(
         "is_published",
         true
@@ -52,17 +59,24 @@ class ResourceService {
   } = await supabase
     .from("resources")
     .select(`
-      id,
-      slug,
-      title,
-      description,
-      category,
-      resource_type,
-      thumbnail_url,
-      is_featured,
-      is_published,
-      created_at
-    `)
+  id,
+  slug,
+  title,
+  description,
+  long_description,
+  category,
+  resource_type,
+  thumbnail_url,
+  preview_type,
+  view_url,
+  version,
+  created_at,
+  updated_at,
+  last_updated_at,
+  reviewed_at,
+  is_featured,
+  is_published
+`)
     .eq("slug", slug)
     .eq("is_published", true)
     .single();

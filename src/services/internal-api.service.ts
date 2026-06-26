@@ -162,7 +162,7 @@ export async function trackResourceView(
   resourceId: string
 ) {
   const response = await fetch(
-    "/api/track-resource-view",
+    "/api/track-resource-activity",
     {
       method: "POST",
       headers: {
@@ -199,4 +199,26 @@ resourceId,
 );
 
 return response;
+}
+
+export async function trackPdfView(
+  userId: string,
+  resourceId: string
+) {
+  return fetch(
+    "/api/resource-activity",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type":
+          "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+        resourceId,
+        activityType:
+          "pdf_viewed",
+      }),
+    }
+  );
 }
