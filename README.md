@@ -5,8 +5,7 @@ Frontend:
 - React
 - TypeScript
 
-Backend:
-- Cloudflare Pages Functions
+
 
 Auth:
 - Supabase Auth
