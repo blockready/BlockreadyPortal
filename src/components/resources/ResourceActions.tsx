@@ -26,7 +26,7 @@ export default function ResourceActions({
     <section className="br-resource-actions">
       <button
         type="button"
-        className="br-button br-button-secondary"
+        className="br-button"
         onClick={
           handleViewPdf
         }
@@ -34,15 +34,15 @@ export default function ResourceActions({
         View 
       </button>
 
-      <button
-        type="button"
-        className="br-button"
-        onClick={
-          onDownload
-        }
-      >
-        Download
-      </button>
+      {resource.preview_type !== "video" && (
+  <button
+    type="button"
+    className="br-button"
+    onClick={onDownload}
+  >
+    Download
+  </button>
+)}
     </section>
   );
 }
