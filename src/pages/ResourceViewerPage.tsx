@@ -128,13 +128,15 @@ export default function ResourceViewerPage() {
           </div>
 
           <div className="br-resource-viewer-header__actions">
-            <button
-              className="br-button br-resource-download-button"
-              onClick={handleDownload}
-            >
-              Download Resource
-            </button>
-          </div>
+  {resource.preview_type !== "video" && (
+    <button
+      className="br-button br-resource-download-button"
+      onClick={handleDownload}
+    >
+      Download Resource
+    </button>
+  )}
+</div>
         </div>
 
         <div className="br-resource-viewer">{renderViewer(resource)}</div>
