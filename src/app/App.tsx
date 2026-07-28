@@ -19,6 +19,7 @@ import ResourceDetailPage from "../pages/ResourceDetailPage";
 
 import { ROUTES } from "./routes";
 import ResourceViewerPage from "../pages/ResourceViewerPage";
+import ResourceLandingPage from "../pages/ResourceLandingPage";
 
 export default function App() {
   return (
@@ -92,8 +93,18 @@ export default function App() {
     </ProtectedRoute>
   }
 />
+
 <Route
-  path="/resource/:slug"
+    path="/resource/:slug"
+    element={
+    <ProtectedRoute>
+        <ResourceLandingPage />
+    </ProtectedRoute>    
+  }  
+/>
+
+<Route
+  path="/resource/:slug/details"
   element={
     <ProtectedRoute>
       <ResourceDetailPage />

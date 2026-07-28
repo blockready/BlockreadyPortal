@@ -11,6 +11,11 @@ export default function VideoViewer({
     <section className="br-section-card">
       <video
         controls
+        controlsList="nodownload noplaybackrate"
+        disablePictureInPicture
+        disableRemotePlayback
+        onContextMenu={(e) => e.preventDefault()}
+        preload="metadata"
         width="100%"
         style={{
           borderRadius: "12px",
