@@ -413,3 +413,10 @@ h1 .accent { color: var(--blue-600); }
   .footer-links-grid { flex: 1; }
   .footer-bottom { flex-direction: row; justify-content: space-between; align-items: center; }
 }
+
+.form-error {
+  margin-top: 12px;
+  color: #dc2626;
+  font-size: 13px;
+  line-height: 1.4;
+}

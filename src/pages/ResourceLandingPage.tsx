@@ -380,6 +380,9 @@ export default function ResourceLandingPage() {
               </select>
             </div>
 
+            {error && <p className="form-error">{error}</p>}
+
+
             <button className="send-btn" type="submit" disabled={isSubmitting}>
               {submitted ? 'Submitted' : isSubmitting ? 'Submitting...' : 'Send me the report →'}
             </button>
