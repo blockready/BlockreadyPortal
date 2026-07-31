@@ -127,7 +127,7 @@ export default function ResourceCard({
       </div>
 
       <Link
-        to={`/resource/${resource.slug}`}
+        to={`/resource/${resource.slug}/details`}
         className="br-button br-card--resource__cta"
       >
         View Resource

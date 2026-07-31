@@ -1,19 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import AppHeader from '../components/layout/AppHeader';
 import './ResourceLandingPage.css';
-import { Link, useParams } from "react-router-dom";
-import { supabase } from '../lib/supabase';
+import { Link } from "react-router-dom";
 
 export default function ResourceLandingPage() {
-  const { slug } = useParams();
 
-  const [name, setName] = useState('');
-  const [work_email, setWorkEmail] = useState('');
-  const [phone_number, setPhoneNumber] = useState('');
-  const [i_am_a_part_of, setIAmAPartOf] = useState('I am part of...');
-  const [selectedCode, setSelectedCode] = useState('🇦🇪 +971');
-  const [submitted, setSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
 
   useEffect(() => {
     const track = document.getElementById('marqueeTrack');
@@ -25,7 +17,6 @@ export default function ResourceLandingPage() {
 
     const codeTrigger = document.getElementById('codeTrigger');
     const codeMenu = document.getElementById('codeMenu');
-    const overlay = document.getElementById('overlay');
 
     const handleTriggerClick = (e: Event) => {
       e.stopPropagation();
@@ -37,8 +28,6 @@ export default function ResourceLandingPage() {
       const target = e.target as HTMLElement;
       const li = target.closest('li');
       if (!li) return;
-      const code = li.getAttribute('data-code');
-      if (code) setSelectedCode(code);
       codeMenu?.classList.remove('open');
       codeTrigger?.classList.remove('open');
     };
@@ -48,74 +37,19 @@ export default function ResourceLandingPage() {
       codeTrigger?.classList.remove('open');
     };
 
-    const handleOverlayClick = (e: Event) => {
-      if (e.target === overlay) closeModal();
-    };
 
     codeTrigger?.addEventListener('click', handleTriggerClick);
     codeMenu?.addEventListener('click', handleMenuClick);
     document.addEventListener('click', handleDocumentClick);
-    overlay?.addEventListener('click', handleOverlayClick);
 
     return () => {
       codeTrigger?.removeEventListener('click', handleTriggerClick);
       codeMenu?.removeEventListener('click', handleMenuClick);
       document.removeEventListener('click', handleDocumentClick);
-      overlay?.removeEventListener('click', handleOverlayClick);
     };
   }, []);
 
-  const openModal = () => {
-    document.getElementById('overlay')?.classList.add('open');
-  };
 
-  const closeModal = () => {
-    document.getElementById('overlay')?.classList.remove('open');
-  };
-  const [error, setError] = useState('');
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-     if (
-    !name.trim() ||
-    !work_email.trim() ||
-    !phone_number.trim() ||
-    i_am_a_part_of === 'I am part of...'
-  ) {
-    setError('Please fill in all 4 fields.');
-    return;
-  }
-
-  setError('');
-
-    setIsSubmitting(true);
-
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    await supabase.from("report_requests").insert({
-      user_id: user!.id,
-      name,
-      work_email,
-      phone_number: `${selectedCode} ${phone_number}`,
-      i_am_a_part_of,
-    });
-
-    setSubmitted(true);
-    setName('');
-    setWorkEmail('');
-    setPhoneNumber('');
-    setIAmAPartOf('I am part of...');
-    setSelectedCode('🇦🇪 +971');
-
-    setIsSubmitting(false);
-
-    setTimeout(() => {
-        setSubmitted(false);
-    }, 2000);
-  };
 
   return (
     <>
@@ -128,10 +62,9 @@ export default function ResourceLandingPage() {
           <p className="sub">Download the plain-English report that explains the 6 concepts every non-technical team needs before touching a wallet, a contract, or a token.</p>
           <div className="hero-actions">
             <div className="btn-row">
-              <button className="cta-btn" onClick={openModal}>Get the free report →</button>
               <Link
-                to={`/resource/${slug}/details`}
-                className="cta-btn cta-btn-secondary"
+                to={`/signup`}
+                className="cta-btn"
               >
                 Proceed to this resource →
               </Link>
@@ -179,7 +112,12 @@ export default function ResourceLandingPage() {
         </div>
 
         <div className="cta-center">
-          <button className="cta-btn" onClick={openModal}>Get the free report →</button>
+          <Link
+              to="/signup"
+              className="cta-btn"
+          >
+              Proceed to Resource →
+          </Link>        
         </div>
       </section>
 
@@ -287,108 +225,6 @@ export default function ResourceLandingPage() {
         </div>
       </footer>
 
-      <div className="overlay" id="overlay">
-        <div className="modal">
-          <div className="modal-head">
-            <h3>Get The 6-Concept Primer</h3>
-            <button className="modal-close" onClick={closeModal}>✕</button>
-          </div>
-          <p className="desc">Enter your details and we'll send you The 6-Concept Primer: the plain-English report that gets your team blockchain-ready before your next Web3 decision.</p>
-
-          <form onSubmit={handleSubmit}>
-            <div className="field">
-              <span className="ic">👤</span>
-              <input
-                type="text"
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-
-            <div className="field">
-              <span className="ic">✉️</span>
-              <input
-                type="email"
-                placeholder="Work email"
-                value={work_email}
-                onChange={(e) => setWorkEmail(e.target.value)}
-              />
-            </div>
-
-            <div className="field phone-field">
-              <div className="phone-row">
-                <button type="button" className="code-trigger" id="codeTrigger">
-                  <span id="codeSelected">{selectedCode}</span>
-                  <span className="code-caret">▾</span>
-                </button>
-                <input
-                  type="tel"
-                  placeholder="Phone number"
-                  value={phone_number}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                />
-              </div>
-              <ul className="code-menu" id="codeMenu">
-                <li data-code="🇦🇪 +971"><span className="flag">🇦🇪</span><span className="country">UAE</span><span className="dial">+971</span></li>
-                <li data-code="🇺🇸 +1"><span className="flag">🇺🇸</span><span className="country">USA</span><span className="dial">+1</span></li>
-                <li data-code="🇬🇧 +44"><span className="flag">🇬🇧</span><span className="country">UK</span><span className="dial">+44</span></li>
-                <li data-code="🇮🇳 +91"><span className="flag">🇮🇳</span><span className="country">India</span><span className="dial">+91</span></li>
-                <li data-code="🇦🇺 +61"><span className="flag">🇦🇺</span><span className="country">Australia</span><span className="dial">+61</span></li>
-                <li data-code="🇸🇬 +65"><span className="flag">🇸🇬</span><span className="country">Singapore</span><span className="dial">+65</span></li>
-                <li data-code="🇸🇦 +966"><span className="flag">🇸🇦</span><span className="country">Saudi Arabia</span><span className="dial">+966</span></li>
-                <li data-code="🇶🇦 +974"><span className="flag">🇶🇦</span><span className="country">Qatar</span><span className="dial">+974</span></li>
-                <li data-code="🇧🇭 +973"><span className="flag">🇧🇭</span><span className="country">Bahrain</span><span className="dial">+973</span></li>
-                <li data-code="🇰🇼 +965"><span className="flag">🇰🇼</span><span className="country">Kuwait</span><span className="dial">+965</span></li>
-                <li data-code="🇴🇲 +968"><span className="flag">🇴🇲</span><span className="country">Oman</span><span className="dial">+968</span></li>
-                <li data-code="🇪🇬 +20"><span className="flag">🇪🇬</span><span className="country">Egypt</span><span className="dial">+20</span></li>
-                <li data-code="🇿🇦 +27"><span className="flag">🇿🇦</span><span className="country">South Africa</span><span className="dial">+27</span></li>
-                <li data-code="🇩🇪 +49"><span className="flag">🇩🇪</span><span className="country">Germany</span><span className="dial">+49</span></li>
-                <li data-code="🇫🇷 +33"><span className="flag">🇫🇷</span><span className="country">France</span><span className="dial">+33</span></li>
-                <li data-code="🇪🇸 +34"><span className="flag">🇪🇸</span><span className="country">Spain</span><span className="dial">+34</span></li>
-                <li data-code="🇮🇹 +39"><span className="flag">🇮🇹</span><span className="country">Italy</span><span className="dial">+39</span></li>
-                <li data-code="🇳🇱 +31"><span className="flag">🇳🇱</span><span className="country">Netherlands</span><span className="dial">+31</span></li>
-                <li data-code="🇸🇪 +46"><span className="flag">🇸🇪</span><span className="country">Sweden</span><span className="dial">+46</span></li>
-                <li data-code="🇨🇭 +41"><span className="flag">🇨🇭</span><span className="country">Switzerland</span><span className="dial">+41</span></li>
-                <li data-code="🇯🇵 +81"><span className="flag">🇯🇵</span><span className="country">Japan</span><span className="dial">+81</span></li>
-                <li data-code="🇰🇷 +82"><span className="flag">🇰🇷</span><span className="country">South Korea</span><span className="dial">+82</span></li>
-                <li data-code="🇨🇳 +86"><span className="flag">🇨🇳</span><span className="country">China</span><span className="dial">+86</span></li>
-                <li data-code="🇭🇰 +852"><span className="flag">🇭🇰</span><span className="country">Hong Kong</span><span className="dial">+852</span></li>
-                <li data-code="🇵🇰 +92"><span className="flag">🇵🇰</span><span className="country">Pakistan</span><span className="dial">+92</span></li>
-                <li data-code="🇧🇩 +880"><span className="flag">🇧🇩</span><span className="country">Bangladesh</span><span className="dial">+880</span></li>
-                <li data-code="🇮🇩 +62"><span className="flag">🇮🇩</span><span className="country">Indonesia</span><span className="dial">+62</span></li>
-                <li data-code="🇲🇾 +60"><span className="flag">🇲🇾</span><span className="country">Malaysia</span><span className="dial">+60</span></li>
-                <li data-code="🇵🇭 +63"><span className="flag">🇵🇭</span><span className="country">Philippines</span><span className="dial">+63</span></li>
-                <li data-code="🇧🇷 +55"><span className="flag">🇧🇷</span><span className="country">Brazil</span><span className="dial">+55</span></li>
-                <li data-code="🇲🇽 +52"><span className="flag">🇲🇽</span><span className="country">Mexico</span><span className="dial">+52</span></li>
-                <li data-code="🇨🇦 +1"><span className="flag">🇨🇦</span><span className="country">Canada</span><span className="dial">+1</span></li>
-                <li data-code="🇳🇬 +234"><span className="flag">🇳🇬</span><span className="country">Nigeria</span><span className="dial">+234</span></li>
-                <li data-code="🇰🇪 +254"><span className="flag">🇰🇪</span><span className="country">Kenya</span><span className="dial">+254</span></li>
-              </ul>
-            </div>
-
-            <div className="field">
-              <span className="ic">🏢</span>
-              <select
-                value={i_am_a_part_of}
-                onChange={(e) => setIAmAPartOf(e.target.value)}
-              >
-                <option>A startup</option>
-                <option>An enterprise team</option>
-                <option>An agency</option>
-                <option>Just exploring</option>
-              </select>
-            </div>
-
-            {error && <p className="form-error">{error}</p>}
-
-
-            <button className="send-btn" type="submit" disabled={isSubmitting}>
-              {submitted ? 'Submitted' : isSubmitting ? 'Submitting...' : 'Send me the report →'}
-            </button>
-          </form>
-        </div>
-      </div>
     </>
   );
 }

@@ -96,11 +96,7 @@ export default function App() {
 
 <Route
     path="/resource/:slug"
-    element={
-    <ProtectedRoute>
-        <ResourceLandingPage />
-    </ProtectedRoute>    
-  }  
+    element={<ResourceLandingPage />}  
 />
 
 <Route
