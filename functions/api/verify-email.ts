@@ -19,9 +19,15 @@ export const onRequestPost = async (
   interest?: string;
   eventType?: string;
   metadata?: Record<string, unknown>;
+  landingConversionId?: string;
 };
 
-    const { userId } = body;
+  
+
+    const {
+  userId,
+  landingConversionId,
+} = body;
 
     const supabase =
       createSupabaseAdmin(
@@ -68,6 +74,22 @@ export const onRequestPost = async (
         event_type:
           "email_verified",
       });
+
+
+      if (landingConversionId && userId) {
+  const { error } = await supabase
+    .from("resource_landing_conversions")
+    .update({
+      user_id: userId,
+      action: "signup",
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", landingConversionId);
+
+  if (error) {
+    throw error;
+  }
+}
 
     return Response.json({
       success: true,

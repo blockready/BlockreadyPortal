@@ -222,3 +222,61 @@ export async function trackPdfView(
     }
   );
 }
+
+export async function createLandingConversion(
+  resourceSlug: string
+): Promise<
+  | { success: true; id: string }
+  | { success: false; error: string }
+> {
+  const response = await fetch(
+    "/api/create-landing-conversion",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type":
+          "application/json",
+      },
+      body: JSON.stringify({
+        resourceSlug,
+      }),
+    }
+  );
+
+  return response.json();
+}
+
+type UpdateLandingConversionResponse = {
+  success: boolean;
+  error?: string;
+  data?: {
+    id: string;
+    user_id: string | null;
+    resource_slug: string;
+    action: string;
+    created_at: string;
+  };
+};
+
+export async function updateLandingConversion(
+  id: string,
+  userId: string,
+  action: "login" | "signup"
+): Promise<UpdateLandingConversionResponse> {
+  const response = await fetch(
+    "/api/update-landing-conversion",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+        userId,
+        action,
+      }),
+    }
+  );
+
+  return response.json() as Promise<UpdateLandingConversionResponse>;
+}

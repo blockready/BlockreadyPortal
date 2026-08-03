@@ -7,10 +7,11 @@ import Alert from "../ui/Alert";
 
 import { authService } from "../../services/auth.service";
 import {
-  getProfile, updateLogin, verifyEmail,
+  getProfile,
+  updateLogin,
+  verifyEmail,
+  updateLandingConversion,
 } from "../../services/internal-api.service";
-
-
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -59,62 +60,114 @@ export default function LoginForm() {
 
       if (!verified) {
         await authService.signOut();
+
         navigate("/verify");
+
         return;
       }
+
       await verifyEmail(
-  data.user.id
-);
+        data.user.id
+      );
 
       await updateLogin(
-  data.user.id
-);
+        data.user.id
+      );
 
-const profileResponse =
-  await getProfile(
-    data.user.id
-  ) as {
-    profile?: {
-      onboarding_completed?: boolean;
-    };
-  };
+      const landingConversion =
+        sessionStorage.getItem(
+          "landingConversion"
+        );
 
-const onboardingCompleted =
-  profileResponse?.profile
-    ?.onboarding_completed;
+      console.log(
+        "Landing Conversion:",
+        landingConversion
+      );
 
-console.log(
-  "PROFILE RESPONSE:",
-  profileResponse
-);
+      if (landingConversion) {
+        try {
+          const {
+            id,
+            slug,
+          } = JSON.parse(
+            landingConversion
+          );
 
-console.log(
-  "ONBOARDING COMPLETED:",
-  onboardingCompleted
-);
+          const response =
+            await updateLandingConversion(
+              id,
+              data.user.id,
+              "login"
+            );
 
-if (
-  onboardingCompleted
-) {
-  console.log(
-    "NAVIGATING TO OFFER"
-  );
+          console.log(
+            "Landing Update Response:",
+            response
+          );
 
-  navigate("/offer", {
-    replace: true,
-  });
-} else {
-  console.log(
-    "NAVIGATING TO WELCOME"
-  );
+          if (
+            !response.success
+          ) {
+            throw new Error(
+              response.error
+            );
+          }
 
-  navigate("/welcome", {
-    replace: true,
-  });
-}
-    } 
-    
-    catch (err) {
+          sessionStorage.removeItem(
+            "landingConversion"
+          );
+
+          navigate(
+            `/resource/${slug}/details`,
+            {
+              replace: true,
+            }
+          );
+
+          return;
+        } catch (err) {
+          console.error(
+            "Landing conversion update failed",
+            err
+          );
+        }
+      }
+
+      const profileResponse =
+        await getProfile(
+          data.user.id
+        ) as {
+          profile?: {
+            onboarding_completed?: boolean;
+          };
+        };
+
+      const onboardingCompleted =
+        profileResponse?.profile
+          ?.onboarding_completed;
+
+      console.log(
+        "PROFILE RESPONSE:",
+        profileResponse
+      );
+
+      console.log(
+        "ONBOARDING COMPLETED:",
+        onboardingCompleted
+      );
+
+      if (
+        onboardingCompleted
+      ) {
+        navigate("/offer", {
+          replace: true,
+        });
+      } else {
+        navigate("/welcome", {
+          replace: true,
+        });
+      }
+    } catch (err) {
       const message =
         err instanceof Error
           ? err.message

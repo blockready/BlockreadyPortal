@@ -1,11 +1,49 @@
 import { useEffect } from 'react';
 import AppHeader from '../components/layout/AppHeader';
 import './ResourceLandingPage.css';
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  createLandingConversion,
+} from "../services/internal-api.service";
 export default function ResourceLandingPage() {
 
+  const { slug } = useParams();
+  const navigate = useNavigate();
 
+  const handleProceed = async () => {
+  if (!slug) return;
+
+  try {
+    const response = await createLandingConversion(
+      slug
+    );
+
+    if (
+      !response.success
+    ) {
+      throw new Error(
+        response.error
+      );
+    }
+
+    sessionStorage.setItem(
+      "landingConversion",
+      JSON.stringify({
+        id: response.id,
+        slug,
+      })
+    );
+
+    navigate("/signup");
+  } catch (error) {
+    console.error(
+      "Failed to create landing conversion:",
+      error
+    );
+
+    navigate("/signup");
+  }
+};
 
   useEffect(() => {
     const track = document.getElementById('marqueeTrack');
@@ -56,20 +94,34 @@ export default function ResourceLandingPage() {
       <AppHeader />
 
       <section className="wrap hero">
-        <div className="hero-copy">
-          <span className="eyebrow-tag">Free report for teams new to Web3</span>
-          <h1>Get your team <span className="accent">blockchain-ready</span> before your next Web3 decision costs you</h1>
-          <p className="sub">Download the plain-English report that explains the 6 concepts every non-technical team needs before touching a wallet, a contract, or a token.</p>
-          <div className="hero-actions">
-            <div className="btn-row">
-              <Link
-                to={`/signup`}
-                className="cta-btn"
-              >
-                Proceed to this resource →
-              </Link>
+        <div className="hero-inner">
+          <div className="hero-copy">
+            <span className="eyebrow-tag">Free report for teams new to Web3</span>
+            <h1>Get your team <span className="accent">blockchain-ready</span> before your next Web3 decision costs you</h1>
+            <p className="sub">Download the plain-English report that explains the 6 concepts every non-technical team needs before touching a wallet, a contract, or a token.</p>
+            <div className="hero-actions">
+              <div className="btn-row">
+                <Link
+                  to="#"
+                  type="button"
+                  className="cta-btn"
+                  onClick={handleProceed}
+                >
+                  Proceed to this resource →
+                </Link>
+              </div>
+              <span className="meta-line">6 CONCEPTS · 12-MIN READ · NO JARGON</span>
             </div>
-            <span className="meta-line">6 CONCEPTS · 12-MIN READ · NO JARGON</span>
+          </div>
+          <div className="hero-image">
+            <img
+              src="/images/blockchain-hero.png"
+              alt="Digital chain links representing blockchain technology"
+              width="1000"
+              height="750"
+              loading="eager"
+              fetchPriority="high"
+            />
           </div>
         </div>
       </section>
@@ -113,8 +165,10 @@ export default function ResourceLandingPage() {
 
         <div className="cta-center">
           <Link
-              to="/signup"
+              to="#"
+              type="button"
               className="cta-btn"
+              onClick={handleProceed}
           >
               Proceed to Resource →
           </Link>        
