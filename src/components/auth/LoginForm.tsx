@@ -118,7 +118,7 @@ export default function LoginForm() {
           );
 
           navigate(
-            `/resource/${slug}/details`,
+            `/${slug}/details`,
             {
               replace: true,
             }

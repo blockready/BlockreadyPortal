@@ -18,7 +18,7 @@ export default function ResourceActions({
     () => {
       // Phase 2
       navigate(
-        `/resource/${resource.slug}/view`
+        `/${resource.slug}/view`
       );
     };
 

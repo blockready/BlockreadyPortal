@@ -95,12 +95,12 @@ export default function App() {
 />
 
 <Route
-    path="/resource/:slug"
+    path="/:slug"
     element={<ResourceLandingPage />}  
 />
 
 <Route
-  path="/resource/:slug/details"
+  path="/:slug/details"
   element={
     <ProtectedRoute>
       <ResourceDetailPage />
@@ -109,7 +109,7 @@ export default function App() {
 />
 
 <Route
-  path="/resource/:slug/view"
+  path="/:slug/view"
   element={
   <ProtectedRoute>
   <ResourceViewerPage />

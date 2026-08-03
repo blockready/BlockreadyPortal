@@ -9,7 +9,7 @@ export const ROUTES = {
   OFFER: "/offer",
   LIBRARY: "/library",
   RESOURCE:
-  "/resource/:slug",
+  "/:slug",
   
   FORGOT_PASSWORD:
     "/forgot-password",
